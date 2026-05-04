@@ -4,7 +4,7 @@ hosts:
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: standard.small
+    flavor: standard.tiny
     hidden: True
     volumes:
       - size: 16
@@ -16,20 +16,20 @@ hosts:
       image: debian-12-x86_64
       mgmt_user: debian
       mgmt_protocol: ssh
-    flavor: standard.small
+    flavor: standard.tiny
 
 routers:
   - name: server-router
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: standard.small
+    flavor: standard.tiny
 
   - name: home-router
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
-    flavor: standard.small
+    flavor: standard.tiny
 
 wan:
   name: internet-connection
