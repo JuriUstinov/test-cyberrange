@@ -1,6 +1,4 @@
-- name: Ensure the sandbox is ready
-  hosts: all
-  become: yes
+- hosts: all
   tasks:
-    - name: Ping the host
+    - name: Ensure the host is ready
       ping:
