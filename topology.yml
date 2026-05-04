@@ -1,7 +1,39 @@
 name: minimal-sandbox
 hosts:
-  - name: webserver
+  - name: myhost
     base_box:
       image: debian-12-x86_64
       mgmt_user: debian
     flavor: standard.small
+
+routers:
+  - name: myrouter
+    base_box:
+      image: debian-12-x86_64
+      mgmt_user: debian
+    flavor: standard.small
+
+wan:
+  name: wan
+  cidr: 100.100.100.0/24
+
+networks:
+  - name: mynetwork
+    cidr: 10.10.10.0/24
+    accessible_by_user: True
+
+net_mappings:
+  - host: myhost
+    network: mynetwork
+    ip: 10.10.10.5
+
+router_mappings:
+  - router: myrouter
+    network: mynetwork
+    ip: 10.10.10.1
+
+groups:
+  - name: mygroup
+    nodes:
+      - myhost
+      - myrouter
