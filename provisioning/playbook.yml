@@ -1,4 +1,1 @@
 - hosts: all
-  tasks:
-    - name: Ensure the host is ready
-      ping:
