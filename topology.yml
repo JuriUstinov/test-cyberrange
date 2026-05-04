@@ -1,15 +1,16 @@
-name: small-sandbox
+name: reduced-sandbox
 hosts:
-  - name: server
-    base_box:
-      image: debian-12-x86_64
-      mgmt_user: debian
-    flavor: standard.tiny
-    hidden: True
-    volumes:
-      - size: 16
-      - size: 2
-      - size: 9
+  # Host 'server' wurde auskommentiert, um Ressourcen zu sparen
+  # - name: server
+  #   base_box:
+  #     image: debian-12-x86_64
+  #     mgmt_user: debian
+  #   flavor: standard.small
+  #   hidden: True
+  #   volumes:
+  #     - size: 16
+  #     - size: 2
+  #     - size: 9
 
   - name: home
     base_box:
@@ -19,11 +20,12 @@ hosts:
     flavor: standard.tiny
 
 routers:
-  - name: server-router
-    base_box:
-      image: debian-12-x86_64
-      mgmt_user: debian
-    flavor: standard.tiny
+  # Router 'server-router' wurde auskommentiert
+  # - name: server-router
+  #   base_box:
+  #     image: debian-12-x86_64
+  #     mgmt_user: debian
+  #   flavor: standard.small
 
   - name: home-router
     base_box:
@@ -36,115 +38,33 @@ wan:
   cidr: 100.100.100.0/24
 
 networks:
-  - name: server-switch
-    cidr: 10.10.20.0/24
-    accessible_by_user: False
+  # Server-Netzwerk ebenfalls deaktiviert
+  # - name: server-switch
+  #   cidr: 10.10.20.0/24
+  #   accessible_by_user: False
 
   - name: home-switch
     cidr: 10.10.30.0/24
 
 net_mappings:
-  - host: server
-    network: server-switch
-    ip: 10.10.20.5
+  # - host: server
+  #   network: server-switch
+  #   ip: 10.10.20.5
 
   - host: home
     network: home-switch
     ip: 10.10.30.5
 
 router_mappings:
-  # Verbindung zum internen Server-Netz
-  - router: server-router
-    network: server-switch
-    ip: 10.10.20.1
-  
-  # KRITISCH: Verbindung des Routers zum WAN (Internet)
-  - router: server-router
-    network: internet-connection
+  # - router: server-router
+  #   network: server-switch
+  #   ip: 10.10.20.1
 
-  # Verbindung zum internen Home-Netz
-  - router: home-router
-    network: home-switch
-    ip: 10.10.30.1
-  
-  # Optional: Auch der zweite Router kann ans WAN, 
-  # meistens reicht jedoch ein zentraler Übergangspunkt.
-  - router: home-router
-    network: internet-connection
-
-groups:
-  - name: custom-group
-    nodes:
-      - home
-      - home-routername: small-sandbox
-hosts:
-  - name: server
-    base_box:
-      image: debian-12-x86_64
-      mgmt_user: debian
-    flavor: standard.small
-    hidden: True
-    volumes:
-      - size: 16
-      - size: 2
-      - size: 9
-
-  - name: home
-    base_box:
-      image: debian-12-x86_64
-      mgmt_user: debian
-      mgmt_protocol: ssh
-    flavor: standard.small
-
-routers:
-  - name: server-router
-    base_box:
-      image: debian-12-x86_64
-      mgmt_user: debian
-    flavor: standard.small
-
-  - name: home-router
-    base_box:
-      image: debian-12-x86_64
-      mgmt_user: debian
-    flavor: standard.small
-
-wan:
-  name: internet-connection
-  cidr: 100.100.100.0/24
-
-networks:
-  - name: server-switch
-    cidr: 10.10.20.0/24
-    accessible_by_user: False
-
-  - name: home-switch
-    cidr: 10.10.30.0/24
-
-net_mappings:
-  - host: server
-    network: server-switch
-    ip: 10.10.20.5
-
-  - host: home
-    network: home-switch
-    ip: 10.10.30.5
-
-router_mappings:
-  # Verbindung zum Server-Netz
-  - router: server-router
-    network: server-switch
-    ip: 10.10.20.1
-
-  # Verbindung zum Home-Netz
   - router: home-router
     network: home-switch
     ip: 10.10.30.1
 
-  # Notwendig für KYPO-Management (SSH/Guacamole)
-  - router: server-router
-    network: internet-connection
-
+  # Verbindung zum WAN für Management
   - router: home-router
     network: internet-connection
 
