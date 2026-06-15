@@ -1,3 +1,15 @@
-outputs:
-  - name: home_ip
-    value: "10.10.30.5"
+telnet_port:
+    type: port
+    min: 1500
+    max: 65000
+    prohibited: [2323]
+
+secret:
+    type: text
+
+username:
+    type: username
+
+encrypted_file:
+    type: password
+    length: 5
